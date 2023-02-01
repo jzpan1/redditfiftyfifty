@@ -1,39 +1,35 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import SubField from './components/SubField.js'
 
 const RedditWindow = () => {
-	const [subreddit1, setSub1] = useState('cursedimages')
-	const [subreddit2, setSub2] = useState('eyebleach')
+	const [subreddits, setSubs] = useState([""])
 	const [redditContent, setRedditContent] = useState('')
 	const [history, setHistory] = useState([])
 	const [altText, setAlt] = useState("Click the reload button")
 
-	// useEffect( () => {
-	// 	fetchAuthorization()
-	// }
-	// )
-
-	// const fetchAuthorization = async () => {
-	// 	console.log("ahhh");
-	// 	axios.defaults.headers.common['Access-Control-Allow-Origin'] =  '*';
-	// 	const response = await axios.post(
-	// 		'https://www.reddit.com/?grant_type=password&username=dedshadow&password=pan,james', 
-	// 		{user: "7491ahn1EGbJq_1JyDb2Zg", crossdomain: true}
-	// 	)
-
-	// 	axios.defaults.headers.common['Authorization'] = `Bearer ${response.data["access token"]}`
-	// 	axios.defaults.headers.common['User-Agent'] = "RedditFiftyFifty/0.1 by dedshadow"
-	// 	console.log(response.data);
-	// }
 	const loadRedditPost = async () => {
 		setRedditContent('')
 		setAlt("Loading...")
-		if (Math.random() < 0.5) {
-			setRedditContent( await getImgUrl(subreddit1) );
-		}
-		else {
-			setRedditContent( await getImgUrl(subreddit2) );
-		}
+		setRedditContent( await getImgUrl( subreddits[Math.floor(Math.random()*subreddits.length)] ));
+	}
+
+	const changeSubreddit = (index, value) => {
+		let newSubs = subreddits.slice();
+		newSubs[index] = value;
+		setSubs(newSubs);
+	}
+
+	const generateSubFields = () => {	
+		return (
+			<>
+			{
+				subreddits.map( 
+					(sub, ind) => <SubField onChange={(index, value) => changeSubreddit(index, value)} key={ind} index={ind} val={sub} />
+				)
+			}
+			</>
+		)
 	}
 	
 	const getImgUrl = async (subreddit, recurseCount=0) => {
@@ -43,6 +39,7 @@ const RedditWindow = () => {
 			setAlt("couldn't find image :(")
 			return url
 		}
+
 		try {
 			response = await axios.get("https://www.reddit.com/r/" + subreddit + "/random.json")
 		}
@@ -51,6 +48,7 @@ const RedditWindow = () => {
 			console.log(error)
 			return url
 		}
+
 		if (Array.isArray(response.data)) {
 			for (const index in response.data) {
 				let listing = response.data[index]
@@ -97,26 +95,15 @@ const RedditWindow = () => {
 	return (
 		<div className="reddit-window">
 			<div className="form">
-				<input 
-					className="input"
-					type="text"
-					placeholder="Subreddit 1"
-					value={ subreddit1 }
-					onChange={ (e) => setSub1(e.target.value) }
-				/>
-				<input 
-					className="input"
-					type="text"
-					placeholder="Subreddit 2"
-					value={ subreddit2 }
-					onChange={ (e) => setSub2(e.target.value) }
-				/>
+				{generateSubFields()}
+				<br/>
+				<button onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
+				<button onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
 				<button onClick={() => {loadRedditPost()}}>Reload</button>
 			</div>
 			<div className="image-container">
 				<img src={ redditContent } alt={altText} />
 			</div>
-			
 		</div>
 	);
 }
