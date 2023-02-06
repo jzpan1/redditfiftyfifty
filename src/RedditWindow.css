@@ -1,0 +1,28 @@
+.reddit-window {
+  text-align: center;
+}
+img {
+  max-width: 80%;
+  max-height: 600px;
+}
+button {
+  font-size:20px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+  background-color:lightgray;
+  margin:10px;
+}
+button:hover {
+  cursor:pointer;
+  background-color: darkgray;
+}
+
+input {
+  font-size: 20px;
+  padding: 16px;
+  border-style:solid;
+  border-width: 2px;
+  border-radius:4px;
+  margin: 0px 3px 10px 3px;
+}
