@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 import SubField from './components/SubField.js';
 import './RedditWindow.css';
-import RedditContent from './components/RedditContent';
 
 const RedditWindow = () => {
 	const [subreddits, setSubs] = useState([""]);
@@ -27,14 +26,7 @@ const RedditWindow = () => {
 			<>
 			{
 				subreddits.map( 
-					(sub, ind) => 
-						<SubField 
-							onChange=
-							{(index, value) => changeSubreddit(index, value)} 
-							key={ind} 
-							index={ind} 
-							val={sub} 
-							/>
+					(sub, ind) => <SubField onChange={(index, value) => changeSubreddit(index, value)} key={ind} index={ind} val={sub} />
 				)
 			}
 			</>
@@ -45,7 +37,7 @@ const RedditWindow = () => {
 		let url = "";
 		let response;
 		if (recurseCount>4) {
-			setAlt("no images found :(")
+			setAlt("couldn't find an image :(")
 			return url;
 		}
 
@@ -53,7 +45,7 @@ const RedditWindow = () => {
 			response = await axios.get("https://www.reddit.com/r/" + subreddit.replace("r/", "") + "/random.json")
 		}
 		catch(error) {
-			setAlt("couldn't find any images, are you sure that's a subreddit?")
+			setAlt("couldn't find any images :( \n are you sure that's a subreddit?")
 			console.log(error);
 			return url;
 		}
@@ -64,7 +56,7 @@ const RedditWindow = () => {
 				for (const childInd in listing.data.children) {
 					let child = listing.data.children[childInd];
 					try {
-						url = child.data.url;
+						url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i');
 						if (url != "" && !history.includes(url))
 						{
 							break;
@@ -84,7 +76,7 @@ const RedditWindow = () => {
 			for (const childInd in response.data.data.children) {
 				let child = response.data.data.children[childInd];
 				try {
-					url = child.data.url;
+					url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i');
 					if (url != "" && !history.includes(url))
 					{
 						break;
@@ -95,17 +87,11 @@ const RedditWindow = () => {
 				}
 			}
 		}
-		if (url.includes("reddit.com")) {
+		if (url.includes("external-i")) {
 			return await getImgUrl(subreddit, recurseCount+1)
 		}
-		else if (url === "") {
-			setAlt("no images found, are you sure that subreddit has images?");
-		}
-		else {
-			setHistory(history.concat([url]));
-			setAlt("image can't be loaded :(");
-		}
-		
+		setHistory(history.concat([url]));
+		setAlt("image can't be loaded :(");
 		return url;
 	}
 
@@ -119,7 +105,7 @@ const RedditWindow = () => {
 				<button onClick={() => {loadRedditPost()}}>Reload</button>
 			</div>
 			<div className="image-container">
-				<RedditContent src={ redditContent } alt={altText}/>
+				<img src={ redditContent } alt={altText} />
 			</div>
 		</div>
 	);
