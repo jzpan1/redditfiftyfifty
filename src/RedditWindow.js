@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import SubField from './components/SubField.js'
+import SubField from './components/SubField.js';
+import './RedditWindow.css';
 
 const RedditWindow = () => {
-	const [subreddits, setSubs] = useState([""])
-	const [redditContent, setRedditContent] = useState('')
-	const [history, setHistory] = useState([])
-	const [altText, setAlt] = useState("Click the reload button")
+	const [subreddits, setSubs] = useState([""]);
+	const [redditContent, setRedditContent] = useState('');
+	const [history, setHistory] = useState([]);
+	const [altText, setAlt] = useState("Click the reload button");;
 
 	const loadRedditPost = async () => {
-		setRedditContent('')
-		setAlt("Loading...")
+		setRedditContent('');
+		setAlt("Searching...");
 		setRedditContent( await getImgUrl( subreddits[Math.floor(Math.random()*subreddits.length)] ));
 	}
 
@@ -35,50 +36,50 @@ const RedditWindow = () => {
 	const getImgUrl = async (subreddit, recurseCount=0) => {
 		let url = "";
 		let response;
-		if (recurseCount>9) {
-			setAlt("couldn't find image :(")
-			return url
+		if (recurseCount>4) {
+			setAlt("couldn't find an image :(")
+			return url;
 		}
 
 		try {
-			response = await axios.get("https://www.reddit.com/r/" + subreddit + "/random.json")
+			response = await axios.get("https://www.reddit.com/r/" + subreddit.replace("r/", "") + "/random.json")
 		}
 		catch(error) {
-			setAlt("couldn't find images :( \n are you sure that's a subreddit?")
-			console.log(error)
-			return url
+			setAlt("couldn't find any images :( \n are you sure that's a subreddit?")
+			console.log(error);
+			return url;
 		}
 
 		if (Array.isArray(response.data)) {
 			for (const index in response.data) {
-				let listing = response.data[index]
+				let listing = response.data[index];
 				for (const childInd in listing.data.children) {
-					let child = listing.data.children[childInd]
+					let child = listing.data.children[childInd];
 					try {
-						url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i')
+						url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i');
 						if (url != "" && !history.includes(url))
 						{
-							break
+							break;
 						}
 					}
 					catch (error) {
-						continue
+						continue;
 					}
 				}
 				if (url != "" && !history.includes(url))
 				{
-					break
+					break;
 				}
 			}
 		}
 		else {
 			for (const childInd in response.data.data.children) {
-				let child = response.data.data.children[childInd]
+				let child = response.data.data.children[childInd];
 				try {
-					url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i')
+					url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i');
 					if (url != "" && !history.includes(url))
 					{
-						break
+						break;
 					}
 				}
 				catch (error) {
@@ -86,9 +87,11 @@ const RedditWindow = () => {
 				}
 			}
 		}
-		if (url.includes("external-i")) {return await getImgUrl(subreddit, recurseCount+1)}
-		setHistory(history.concat([url]))
-		setAlt("couldn't find image :(")
+		if (url.includes("external-i")) {
+			return await getImgUrl(subreddit, recurseCount+1)
+		}
+		setHistory(history.concat([url]));
+		setAlt("image can't be loaded :(");
 		return url;
 	}
 
