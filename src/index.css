@@ -8,6 +8,8 @@ body {
   background-color: white;
   transition: 0.5s;
 }
+
+
 body.night {
   background-color:black;
   color:white;
@@ -16,4 +18,8 @@ body.night {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  margin:5px;
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 import SubField from './components/SubField.js';
 import './RedditWindow.css';
+import RedditContent from './components/RedditContent';
 
 const RedditWindow = () => {
 	const [subreddits, setSubs] = useState([""]);
@@ -26,7 +27,14 @@ const RedditWindow = () => {
 			<>
 			{
 				subreddits.map( 
-					(sub, ind) => <SubField onChange={(index, value) => changeSubreddit(index, value)} key={ind} index={ind} val={sub} />
+					(sub, ind) => 
+						<SubField 
+							onChange=
+							{(index, value) => changeSubreddit(index, value)} 
+							key={ind} 
+							index={ind} 
+							val={sub} 
+							/>
 				)
 			}
 			</>
@@ -37,7 +45,7 @@ const RedditWindow = () => {
 		let url = "";
 		let response;
 		if (recurseCount>4) {
-			setAlt("couldn't find an image :(")
+			setAlt("no media found :(")
 			return url;
 		}
 
@@ -45,7 +53,11 @@ const RedditWindow = () => {
 			response = await axios.get("https://www.reddit.com/r/" + subreddit.replace("r/", "") + "/random.json")
 		}
 		catch(error) {
-			setAlt("couldn't find any images :( \n are you sure that's a subreddit?")
+			setAlt("couldn't find any media, are you sure that's a subreddit?")
+			if (subreddit.replace("r/", "") === "")
+			{
+				response = await axios.get("https://www.reddit.com//random.json")
+			}
 			console.log(error);
 			return url;
 		}
@@ -56,7 +68,11 @@ const RedditWindow = () => {
 				for (const childInd in listing.data.children) {
 					let child = listing.data.children[childInd];
 					try {
-						url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i');
+						url = child.data.url;
+						if (url.includes("v.redd.it"))
+						{
+							url = child.data.secure_media.reddit_video.fallback_url;
+						}
 						if (url != "" && !history.includes(url))
 						{
 							break;
@@ -76,7 +92,11 @@ const RedditWindow = () => {
 			for (const childInd in response.data.data.children) {
 				let child = response.data.data.children[childInd];
 				try {
-					url = child.data.preview.images[0].resolutions.slice(-1)[0].url.replace('preview', 'i');
+					url = child.data.url;
+					if (url.includes("v.redd.it"))
+					{
+						url = child.data.secure_media.reddit_video.fallback_url;
+					}
 					if (url != "" && !history.includes(url))
 					{
 						break;
@@ -87,25 +107,33 @@ const RedditWindow = () => {
 				}
 			}
 		}
-		if (url.includes("external-i")) {
+		if (url.includes("reddit.com")) {
 			return await getImgUrl(subreddit, recurseCount+1)
 		}
-		setHistory(history.concat([url]));
-		setAlt("image can't be loaded :(");
+		else if (url === "") {
+			setAlt("no content found, are you sure that subreddit has multimedia content?");
+		}
+		else {
+			setHistory(history.concat([url]));
+			setAlt("media can't be loaded :(");
+		}
+		
 		return url;
 	}
 
 	return (
 		<div className="reddit-window">
 			<div className="form">
+				
 				{generateSubFields()}
 				<br/>
+				<button className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>☪</button>
 				<button onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
 				<button onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
-				<button onClick={() => {loadRedditPost()}}>Reload</button>
+				<button onClick={() => {loadRedditPost()}}>Find!</button>
 			</div>
-			<div className="image-container">
-				<img src={ redditContent } alt={altText} />
+			<div className="content-container">
+				<RedditContent src={ redditContent } alt={altText}/>
 			</div>
 		</div>
 	);

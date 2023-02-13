@@ -26,3 +26,10 @@ input {
   border-radius:4px;
   margin: 0px 3px 10px 3px;
 }
+.reddit-content {
+  max-height:550px;
+}
+iframe {
+  height:550px;
+  width:45%;
+}
