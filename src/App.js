@@ -5,7 +5,6 @@ import { BrowserRouter as  Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <Router>
-      <button onClick={()=> document.body.classList.toggle("night")}>nightmode</button>
         <Routes>
           <Route exact path="/" element={<RedditWindow/>}/>
         </Routes>

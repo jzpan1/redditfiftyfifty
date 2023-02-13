@@ -45,7 +45,7 @@ const RedditWindow = () => {
 		let url = "";
 		let response;
 		if (recurseCount>4) {
-			setAlt("no images found :(")
+			setAlt("no media found :(")
 			return url;
 		}
 
@@ -53,7 +53,11 @@ const RedditWindow = () => {
 			response = await axios.get("https://www.reddit.com/r/" + subreddit.replace("r/", "") + "/random.json")
 		}
 		catch(error) {
-			setAlt("couldn't find any images, are you sure that's a subreddit?")
+			setAlt("couldn't find any media, are you sure that's a subreddit?")
+			if (subreddit.replace("r/", "") === "")
+			{
+				response = await axios.get("https://www.reddit.com//random.json")
+			}
 			console.log(error);
 			return url;
 		}
@@ -65,6 +69,10 @@ const RedditWindow = () => {
 					let child = listing.data.children[childInd];
 					try {
 						url = child.data.url;
+						if (url.includes("v.redd.it"))
+						{
+							url = child.data.secure_media.reddit_video.fallback_url;
+						}
 						if (url != "" && !history.includes(url))
 						{
 							break;
@@ -85,6 +93,10 @@ const RedditWindow = () => {
 				let child = response.data.data.children[childInd];
 				try {
 					url = child.data.url;
+					if (url.includes("v.redd.it"))
+					{
+						url = child.data.secure_media.reddit_video.fallback_url;
+					}
 					if (url != "" && !history.includes(url))
 					{
 						break;
@@ -99,11 +111,11 @@ const RedditWindow = () => {
 			return await getImgUrl(subreddit, recurseCount+1)
 		}
 		else if (url === "") {
-			setAlt("no images found, are you sure that subreddit has images?");
+			setAlt("no content found, are you sure that subreddit has multimedia content?");
 		}
 		else {
 			setHistory(history.concat([url]));
-			setAlt("image can't be loaded :(");
+			setAlt("media can't be loaded :(");
 		}
 		
 		return url;
@@ -112,13 +124,15 @@ const RedditWindow = () => {
 	return (
 		<div className="reddit-window">
 			<div className="form">
+				
 				{generateSubFields()}
 				<br/>
+				<button className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>☪</button>
 				<button onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
 				<button onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
-				<button onClick={() => {loadRedditPost()}}>Reload</button>
+				<button onClick={() => {loadRedditPost()}}>Find!</button>
 			</div>
-			<div className="image-container">
+			<div className="content-container">
 				<RedditContent src={ redditContent } alt={altText}/>
 			</div>
 		</div>

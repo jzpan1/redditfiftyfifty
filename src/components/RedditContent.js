@@ -1,19 +1,27 @@
 const RedditContent = (props) => {
-	if (props.src.includes("i.reddit")) {
+	if (props.src.includes("v.redd.it")) {
 		return (
-			<img className="reddit-content" src={props.src} alt={props.alt}/>
+			<video controls autoplay className="reddit-content">
+				<source src={props.src} />
+				<source src={props.src.split("/DASH")[0] + "/audio"} />
+			</video>
 		)
 	}
-	if (props.src.includes("v.reddit")) {
+	if (props.src.includes("youtu.be") || props.src.includes("youtube.com") ) {
 		return (
-			<video className="reddit-content" src={props.src + "/DASH_600_K"} />
+			<iframe title="external embed" src={props.src
+				.replace("youtube.com/watch?v=", "youtube.com/embed/")
+				.replace("youtu.be", "youtube.com/embed")
+			} />
 		)
 	}
-	if (props.src.includes("youtu.be") || props.src.includes("gfycat")) {
+	if (props.src.includes("gfycat")) {
 		return (
-			<iframe title="external embed" src={props.src.replace("gfycat.com", "gfycat.com/ifr").replace("youtu.be", "youtube.com/embed")} />
+			<iframe title="external embed" src={props.src.replace("gfycat.com", "gfycat.com/ifr")} />
 		)
 	}
-	return ( <h1>reddit returned an invalid or unembeddable url</h1>)
+	return (
+		<img className="reddit-content" src={props.src} alt={props.alt}/>
+	)
 }
 export default RedditContent;
