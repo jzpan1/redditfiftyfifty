@@ -8,7 +8,7 @@ const RedditWindow = () => {
 	const [subreddits, setSubs] = useState([""]);
 	const [redditContent, setRedditContent] = useState('');
 	const [history, setHistory] = useState([]);
-	const [altText, setAlt] = useState("Click the reload button");;
+	const [altText, setAlt] = useState("Click the Find button");;
 
 	const loadRedditPost = async () => {
 		setRedditContent('');
@@ -123,15 +123,14 @@ const RedditWindow = () => {
 
 	return (
 		<div className="reddit-window">
-			<div className="form">
-				
+			<form onSubmit={(e) => {e.preventDefault(); loadRedditPost();}} >
 				{generateSubFields()}
 				<br/>
-				<button className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>☪</button>
-				<button onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
-				<button onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
-				<button onClick={() => {loadRedditPost()}}>Find!</button>
-			</div>
+				<button type="button" className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>🌃</button>
+				<button type="button" onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
+				<button type="button" onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
+				<button type="submit">Find!</button>
+			</form>
 			<div className="content-container">
 				<RedditContent src={ redditContent } alt={altText}/>
 			</div>
