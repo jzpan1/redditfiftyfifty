@@ -6,8 +6,10 @@
 	border-style: ridge;
 	border-radius: 6px;
 	opacity: 0;
+	margin: auto;
+	margin-top: 10px;
 
-	transition: opacity 0.3s linear, visibility 0s 0.3s, margin 0.5s;
+	transition: opacity 0.3s linear, visibility 0s 0.3s, margin-top 0.5s;
 	padding:10px 30px 40px;
 	left: 50%;
 	transform: translate(-50%, 0);
@@ -18,12 +20,10 @@
 .about-popup.show {
 	visibility:visible;
 	margin-top: 30px;
-	margin-left:auto;
-	margin-right:auto;
 	width: fit-content;
 	max-height:80%;
 	opacity: 1;
-	transition: opacity 0.3s, margin 0.3s;
+	transition: opacity 0.3s, margin-top 0.3s;
 }
 
 .night .about-popup {

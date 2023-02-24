@@ -6,7 +6,7 @@ import RedditContent from './components/RedditContent';
 import AboutPopup from './components/AboutPopup';
 
 const RedditWindow = () => {
-	const [subreddits, setSubs] = useState(["", ""]);
+	const [subreddits, setSubs] = useState(["awww", "creepy"]);
 	const [redditContent, setRedditContent] = useState('');
 	const [history, setHistory] = useState([]);
 	const [altText, setAlt] = useState("Click the Find button or press Enter");;
