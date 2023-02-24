@@ -3,12 +3,13 @@ import axios from "axios";
 import SubField from './components/SubField.js';
 import './RedditWindow.css';
 import RedditContent from './components/RedditContent';
+import AboutPopup from './components/AboutPopup';
 
 const RedditWindow = () => {
-	const [subreddits, setSubs] = useState([""]);
+	const [subreddits, setSubs] = useState(["", ""]);
 	const [redditContent, setRedditContent] = useState('');
 	const [history, setHistory] = useState([]);
-	const [altText, setAlt] = useState("Click the Find button");;
+	const [altText, setAlt] = useState("Click the Find button or press Enter");;
 
 	const loadRedditPost = async () => {
 		setRedditContent('');
@@ -123,9 +124,13 @@ const RedditWindow = () => {
 
 	return (
 		<div className="reddit-window">
+			<AboutPopup />
 			<form onSubmit={(e) => {e.preventDefault(); loadRedditPost();}} >
 				{generateSubFields()}
 				<br/>
+				<button type="button" className="about-popup-toggle" onClick={
+					()=> document.getElementById("about-popup").classList.toggle("show")
+					}>❓</button>
 				<button type="button" className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>🌃</button>
 				<button type="button" onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
 				<button type="button" onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
