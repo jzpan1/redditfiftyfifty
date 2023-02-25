@@ -26,14 +26,14 @@ const RedditWindow = () => {
 		return subpairs[Math.floor(Math.random()*subpairs.length)];
 	}
 	const [subreddits, setSubs] = useState(suggestSubreddits());
-	const [redditContent, setRedditContent] = useState('');
+	const [redditContent, setRedditContent] = useState({url:""});
 	const [history, setHistory] = useState([]);
 	const [altText, setAlt] = useState("Click the Find button or press Enter");;
 
 	
 
 	const loadRedditPost = async () => {
-		setRedditContent('');
+		setRedditContent({url: ""});
 		setAlt("Searching...");
 		setRedditContent( await getImgUrl( subreddits[Math.floor(Math.random()*subreddits.length)] ));
 	}
@@ -88,16 +88,18 @@ const RedditWindow = () => {
 			return url;
 		}
 
+		let child = 0;
 		if (Array.isArray(response.data)) {
 			for (const index in response.data) {
 				let listing = response.data[index];
 				for (const childInd in listing.data.children) {
-					let child = listing.data.children[childInd];
+					child = listing.data.children[childInd].data;
+					console.log(child);
 					try {
-						url = child.data.url;
+						url = child.url;
 						if (url.includes("v.redd.it"))
 						{
-							url = child.data.secure_media.reddit_video.fallback_url;
+							url = child.secure_media.reddit_video.fallback_url;
 						}
 						if (url != "" && !history.includes(url))
 						{
@@ -116,12 +118,13 @@ const RedditWindow = () => {
 		}
 		else {
 			for (const childInd in response.data.data.children) {
-				let child = response.data.data.children[childInd];
+				child = response.data.data.children[childInd].data;
+				console.log(child);
 				try {
-					url = child.data.url;
+					url = child.url;
 					if (url.includes("v.redd.it"))
 					{
-						url = child.data.secure_media.reddit_video.fallback_url;
+						url = child.secure_media.reddit_video.fallback_url;
 					}
 					if (url != "" && !history.includes(url))
 					{
@@ -144,7 +147,7 @@ const RedditWindow = () => {
 			setAlt("media can't be loaded :(");
 		}
 		
-		return url;
+		return child;
 	}
 
 	return (
@@ -163,7 +166,11 @@ const RedditWindow = () => {
 				<button type="submit" >Find!</button>
 			</form>
 			<div className="content-container">
-				<RedditContent src={ redditContent } alt={altText}/>
+				<RedditContent src= { redditContent.url } alt={altText}/>
+				<br/>
+				{redditContent.url === "" ?
+				null :
+				<a href= {"https://www.reddit.com" + redditContent.permalink}> Post link </a>}
 			</div>
 		</div>
 	);
