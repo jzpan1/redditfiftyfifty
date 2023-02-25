@@ -10,7 +10,7 @@
 	margin: 0;
 	margin-top: 10px;
 	text-align: left;
-	overflow-y:auto
+	overflow-y:auto;
 
 	transition: opacity 0.3s linear, visibility 0s 0.3s, margin-top 0.5s;
 	padding:10px 30px 40px;
