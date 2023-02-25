@@ -1,7 +1,8 @@
 const RedditContent = (props) => {
+	
 	if (props.src.includes("v.redd.it")) {
 		return (
-			<video controls autoPlay className="reddit-content">
+			<video controls autoplay className="reddit-content">
 				<source src={props.src} />
 				<source src={props.src.split("/DASH")[0] + "/audio"} />
 			</video>
