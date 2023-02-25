@@ -13,7 +13,7 @@ const AboutPopup = (props) => {
 					()=> document.getElementById("about-popup").classList.toggle("show")
 					}>X</button>
 			<h1>How to use</h1>
-			<p>This app allows you to view media selected randomly from provided subreddits. Put in the name of two or more subreddits, click find, and enjoy (or suffer)!</p>
+			<p>This app allows you to view media selected randomly from provided subreddits. Put in the names of your favorite subreddits, click <strong>Find!</strong>, and enjoy!</p>
 
 			<h1>Controls</h1>
 			<ul className="controls">
@@ -27,8 +27,7 @@ const AboutPopup = (props) => {
 				null :
 				<ul className="notes-and-warnings">
 					<li>There are <strong>no warnings or restrictions for most NSFW subs</strong>; However, NSFL subs such as MedicalGore are completely blocked (by reddit, not me)</li>
-					<li>Sound is not available yet</li>
-					<li>Many embed options are not implemented yet, notably imgur and redgifs</li>
+					<li>Sound and many embed options are not implemented yet, notably imgur and redgifs</li>
 				</ul>
 			}
 		</div>

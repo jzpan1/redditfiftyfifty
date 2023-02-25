@@ -31,5 +31,6 @@ input {
 }
 iframe {
   height:550px;
-  width:45%;
+  width:700px;
+  max-width:80%;
 }

@@ -153,14 +153,14 @@ const RedditWindow = () => {
 			<form onSubmit={(e) => {e.preventDefault(); loadRedditPost();}} >
 				{generateSubFields()}
 				<br/>
-				<button type="button" className="about-popup-toggle" onClick={
+				<button type="button" className="about-popup-toggle" title="What is this website`?" onClick={
 					()=> document.getElementById("about-popup").classList.toggle("show")
 					}>❓</button>
-				<button type="button" className="suggest-subs" onClick={()=> {setSubs(suggestSubreddits());}}>🎲</button>
-				<button type="button" className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>🌃</button>
-				<button type="button" onClick={() => {setSubs(subreddits.concat([""]))}}>➕</button>
-				<button type="button" onClick={() => {setSubs(subreddits.slice(0, -1))}}>➖</button>
-				<button type="submit">Find!</button>
+				<button type="button" className="suggest-subs" title="Suggest 2 subreddits" onClick={()=> {setSubs(suggestSubreddits());}}>🎲</button>
+				<button type="button" className="nightmode-toggle" title="Toggle night mode" onClick={()=> document.body.classList.toggle("night")}>🌃</button>
+				<button type="button" title="Add a subreddit" onClick={() => {setSubs(subreddits.concat([""]))}}>➕</button>
+				<button type="button" title="Remove a subreddit" onClick={() => {setSubs(subreddits.slice(0, -1))}}>➖</button>
+				<button type="submit" >Find!</button>
 			</form>
 			<div className="content-container">
 				<RedditContent src={ redditContent } alt={altText}/>
