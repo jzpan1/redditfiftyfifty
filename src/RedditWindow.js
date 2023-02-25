@@ -170,7 +170,7 @@ const RedditWindow = () => {
 				<br/>
 				{redditContent.url === "" ?
 				null :
-				<a href= {"https://www.reddit.com" + redditContent.permalink}> Post link </a>}
+				<a href= {"https://www.reddit.com" + redditContent.permalink} target="_blank"> Post link </a>}
 			</div>
 		</div>
 	);
