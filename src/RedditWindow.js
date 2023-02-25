@@ -72,7 +72,7 @@ const RedditWindow = () => {
 		let response;
 		if (recurseCount>4) {
 			setAlt("no media found :(")
-			return url;
+			return {url: ""};
 		}
 
 		try {
