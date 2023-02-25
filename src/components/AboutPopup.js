@@ -26,7 +26,7 @@ const AboutPopup = (props) => {
 			{collapsed ?
 				null :
 				<ul className="notes-and-warnings">
-					<li>There are <strong>no warnings or restrictions for most NSFW subs</strong>; However, NSFL subs such as MedicalGore are completely blocked (by reddit, not me)</li>
+					<li>There are <strong>no warnings or restrictions for most NSFW subs or content</strong>; However, NSFL subs such as MedicalGore are completely blocked (by reddit, not me)</li>
 					<li>Sound and many embed options are not implemented yet, notably imgur and redgifs</li>
 				</ul>
 			}
