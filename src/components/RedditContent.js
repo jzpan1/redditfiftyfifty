@@ -1,6 +1,7 @@
 const RedditContent = (props) => {
 	
 	if (props.src.includes("v.redd.it")) {
+		let url = props.data.secure_media.reddit_video.fallback_url;
 		return (
 			<video controls autoplay className="reddit-content">
 				<source src={props.src} />
