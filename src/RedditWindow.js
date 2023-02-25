@@ -19,6 +19,19 @@ const subpairs = [	["ManHands", "Feet"],
 	["AbruptChaos", "GradualChaos"],
 	["pics", "memes"],
 	["blessedimages", "cursedimages"],
+	["ratemypoo", "pee"],
+	["ankmemes", "kneesurgerymemes"],
+	["crabseatingthings", "treessuckingonthings"],
+	["enlightenedbirdmen", "madmudmen"],
+	["catsstandingup", "wolveswithwatermelons"],
+	["facepalm", "murderedbywords"],
+	["rareinsults", "iamverysmart"],
+	["blackpeopletwitter", "whitepeopletwitter"],
+	["insanepeoplefacebook", "insanepeoplequora"],
+	["designporn", "crappydesign"],
+	["humansbeingbros", "trashy"],
+	["natureisfuckinglit", "natureismetal"],
+
 ];
 
 const RedditWindow = () => {
