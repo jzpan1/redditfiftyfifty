@@ -5,10 +5,12 @@
 	background-color:white;
 	border-style: ridge;
 	border-radius: 6px;
+	width: fit-content;
 	opacity: 0;
 	margin: 0;
 	margin-top: 10px;
 	text-align: left;
+	overflow-y:auto
 
 	transition: opacity 0.3s linear, visibility 0s 0.3s, margin-top 0.5s;
 	padding:10px 30px 40px;
@@ -22,7 +24,6 @@
 	visibility:visible;
 	margin:0;
 	margin-top: 30px;
-	width: fit-content;
 	max-height:80%;
 	opacity: 1;
 	transition: opacity 0.3s, margin-top 0.3s;
