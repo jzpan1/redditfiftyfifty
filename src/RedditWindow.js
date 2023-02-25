@@ -166,7 +166,7 @@ const RedditWindow = () => {
 				<button type="submit" >Find!</button>
 			</form>
 			<div className="content-container">
-				<RedditContent src= { redditContent.url } alt={altText}/>
+				<RedditContent src= { redditContent.url } data={ redditContent } alt={altText}/>
 				<br/>
 				{redditContent.url === "" ?
 				null :
