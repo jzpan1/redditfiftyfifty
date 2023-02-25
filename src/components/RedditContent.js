@@ -4,8 +4,8 @@ const RedditContent = (props) => {
 		let url = props.data.secure_media.reddit_video.fallback_url;
 		return (
 			<video controls autoplay className="reddit-content">
-				<source src={props.src} />
-				<source src={props.src.split("/DASH")[0] + "/audio"} />
+				<source src={url} />
+				<source src={url.split("/DASH")[0] + "/audio"} />
 			</video>
 		)
 	}
