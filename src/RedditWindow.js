@@ -5,17 +5,42 @@ import './RedditWindow.css';
 import RedditContent from './components/RedditContent';
 import AboutPopup from './components/AboutPopup';
 
+const subpairs = [	["ManHands", "Feet"],
+	["funny", "creepy"],
+	["oddlysatisfying", "oddlyterrifying"],
+	["mildyinteresting", "mildlyinfuriating"],
+	["eyebleach", "makemesuffer"],
+	["comedyheaven", "comedycemetery"],
+	["unexpected", "maybemaybemaybe"],
+	["whatcouldgowrong", "nonononoyes"],
+	["niceguys", "nicegirls"],
+	["PeopleFuckingDying", "watchpeoplesurvive"],
+	["me_irl", "meirl"],
+	["AbruptChaos", "GradualChaos"],
+	["pics", "memes"],
+	["blessedimages", "cursedimages"],
+];
+
 const RedditWindow = () => {
-	const [subreddits, setSubs] = useState(["awww", "creepy"]);
+	const suggestSubreddits = () => {
+		return subpairs[Math.floor(Math.random()*subpairs.length)];
+	}
+	const [subreddits, setSubs] = useState(suggestSubreddits());
 	const [redditContent, setRedditContent] = useState('');
 	const [history, setHistory] = useState([]);
 	const [altText, setAlt] = useState("Click the Find button or press Enter");;
+
+	
 
 	const loadRedditPost = async () => {
 		setRedditContent('');
 		setAlt("Searching...");
 		setRedditContent( await getImgUrl( subreddits[Math.floor(Math.random()*subreddits.length)] ));
 	}
+
+	
+	
+	
 
 	const changeSubreddit = (index, value) => {
 		let newSubs = subreddits.slice();
@@ -131,9 +156,10 @@ const RedditWindow = () => {
 				<button type="button" className="about-popup-toggle" onClick={
 					()=> document.getElementById("about-popup").classList.toggle("show")
 					}>❓</button>
+				<button type="button" className="suggest-subs" onClick={()=> {setSubs(suggestSubreddits());}}>🎲</button>
 				<button type="button" className="nightmode-toggle" onClick={()=> document.body.classList.toggle("night")}>🌃</button>
-				<button type="button" onClick={() => {setSubs(subreddits.concat([""]))}}>+</button>
-				<button type="button" onClick={() => {setSubs(subreddits.slice(0, -1))}}>-</button>
+				<button type="button" onClick={() => {setSubs(subreddits.concat([""]))}}>➕</button>
+				<button type="button" onClick={() => {setSubs(subreddits.slice(0, -1))}}>➖</button>
 				<button type="submit">Find!</button>
 			</form>
 			<div className="content-container">
