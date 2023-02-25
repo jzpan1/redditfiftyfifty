@@ -85,7 +85,7 @@ const RedditWindow = () => {
 				response = await axios.get("https://www.reddit.com//random.json")
 			}
 			console.log(error);
-			return url;
+			return {url: ""};
 		}
 
 		let child = 0;
