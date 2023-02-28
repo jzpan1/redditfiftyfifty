@@ -107,7 +107,6 @@ const RedditWindow = () => {
 				let listing = response.data[index];
 				for (const childInd in listing.data.children) {
 					child = listing.data.children[childInd].data;
-					console.log(child);
 					try {
 						url = child.url;
 						if (url.includes("v.redd.it"))
@@ -132,7 +131,6 @@ const RedditWindow = () => {
 		else {
 			for (const childInd in response.data.data.children) {
 				child = response.data.data.children[childInd].data;
-				console.log(child);
 				try {
 					url = child.url;
 					if (url.includes("v.redd.it"))

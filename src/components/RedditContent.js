@@ -1,13 +1,17 @@
 const RedditContent = (props) => {
-	
+	console.log(props.data)
 	if (props.src.includes("v.redd.it")) {
-		let url = props.data.secure_media.reddit_video.fallback_url;
-		return (
-			<video controls autoplay className="reddit-content">
-				<source src={url} />
-				<source src={url.split("/DASH")[0] + "/audio"} />
-			</video>
-		)
+		try {
+			let url = props.data.secure_media.reddit_video.fallback_url;
+		} catch (error) {}
+		if (url) {
+			return (
+				<video controls autoplay className="reddit-content">
+					<source src={url} />
+					<source src={url.split("/DASH")[0] + "/audio"} />
+				</video>
+			)
+		}
 	}
 	if (props.src.includes("youtu.be") || props.src.includes("youtube.com") ) {
 		return (
