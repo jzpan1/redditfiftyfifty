@@ -1,5 +1,20 @@
-# Getting Started with Create React App
 
+<h1>About</h1>
+<p><a href="https://redditfiftyfifty.vercel.app">Reddit 50/50</a> allows you to view media selected randomly from your provided subreddits. Put in the names of your favorite subreddits, click <strong>Find!</strong>, and enjoy!</p>
+<h1>Controls</h1>
+<ul className="controls">
+  <li>🎲 - get subreddit suggestions (removes current subs)</li>
+  <li>🌃 - toggle night mode</li>
+  <li>➕, ➖ - add or remove subreddits</li>
+</ul>
+<h1>  Notes and Warnings </h1>
+  <ul className="notes-and-warnings">
+    <li>There are <strong>no warnings or restrictions for most NSFW subs or content</strong>; However, NSFL subs such as MedicalGore are completely blocked (by reddit, not me)</li>
+    <li>Sound and many embed options are not implemented yet, notably imgur and redgifs</li>
+  </ul>
+</div>
+
+# React stuff
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
