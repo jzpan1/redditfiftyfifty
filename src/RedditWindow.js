@@ -81,8 +81,9 @@ const RedditWindow = () => {
 	}
 	
 	const getImgUrl = async (subreddit, recurseCount=0) => {
-		let url = "";
+		let contentUrl = "";
 		let response;
+		console.log(recurseCount);
 		if (recurseCount>4) {
 			setAlt("no media found :(")
 			return {url: ""};
@@ -108,12 +109,12 @@ const RedditWindow = () => {
 				for (const childInd in listing.data.children) {
 					child = listing.data.children[childInd].data;
 					try {
-						url = child.url;
-						if (url.includes("v.redd.it"))
+						contentUrl = child.url;
+						if (contentUrl.includes("v.redd.it"))
 						{
-							url = child.secure_media.reddit_video.fallback_url;
+							contentUrl = child.secure_media.reddit_video.fallback_url;
 						}
-						if (url != "" && !history.includes(url))
+						if (contentUrl != "" && !history.includes(contentUrl))
 						{
 							break;
 						}
@@ -122,7 +123,7 @@ const RedditWindow = () => {
 						continue;
 					}
 				}
-				if (url != "" && !history.includes(url))
+				if (contentUrl != "" && !history.includes(contentUrl))
 				{
 					break;
 				}
@@ -132,12 +133,12 @@ const RedditWindow = () => {
 			for (const childInd in response.data.data.children) {
 				child = response.data.data.children[childInd].data;
 				try {
-					url = child.url;
-					if (url.includes("v.redd.it"))
+					contentUrl = child.url;
+					if (contentUrl.includes("v.redd.it"))
 					{
-						url = child.secure_media.reddit_video.fallback_url;
+						contentUrl = child.secure_media.reddit_video.fallback_url;
 					}
-					if (url != "" && !history.includes(url))
+					if (contentUrl != "" && !history.includes(contentUrl))
 					{
 						break;
 					}
@@ -147,14 +148,17 @@ const RedditWindow = () => {
 				}
 			}
 		}
-		if (url.includes("reddit.com")) {
+		if (!contentUrl) {
 			return await getImgUrl(subreddit, recurseCount+1)
 		}
-		else if (url === "") {
+		if (contentUrl.includes("reddit.com")) {
+			return await getImgUrl(subreddit, recurseCount+1)
+		}
+		else if (contentUrl === "") {
 			setAlt("no content found, are you sure that subreddit has multimedia content?");
 		}
 		else {
-			setHistory(history.concat([url]));
+			setHistory(history.concat([contentUrl]));
 			setAlt("media can't be loaded :(");
 		}
 		
