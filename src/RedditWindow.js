@@ -31,6 +31,8 @@ const subpairs = [	["ManHands", "Feet"],
 	["designporn", "crappydesign"],
 	["humansbeingbros", "trashy"],
 	["natureisfuckinglit", "natureismetal"],
+	["AnimalsBeingDerps"], ["AnimalsBeingJerks"],
+	["awww", "popping"],
 
 ];
 
