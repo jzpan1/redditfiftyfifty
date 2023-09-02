@@ -5,7 +5,8 @@ import './RedditWindow.css';
 import RedditContent from './components/RedditContent';
 import AboutPopup from './components/AboutPopup';
 
-const subpairs = [	["ManHands", "Feet"],
+const subpairs = [	
+	["ManHands", "Feet"],
 	["funny", "creepy"],
 	["oddlysatisfying", "oddlyterrifying"],
 	["mildyinteresting", "mildlyinfuriating"],
@@ -21,7 +22,7 @@ const subpairs = [	["ManHands", "Feet"],
 	["blessedimages", "cursedimages"],
 	["ratemypoo", "pee"],
 	["ankmemes", "kneesurgerymemes"],
-	["crabseatingthings", "treessuckingonthings"],
+	["crabseatingthings", "treessuckingonthings", "SEUT"],
 	["enlightenedbirdmen", "madmudmen"],
 	["catsstandingup", "wolveswithwatermelons"],
 	["facepalm", "murderedbywords"],
@@ -31,12 +32,18 @@ const subpairs = [	["ManHands", "Feet"],
 	["designporn", "crappydesign"],
 	["humansbeingbros", "trashy"],
 	["natureisfuckinglit", "natureismetal"],
-	["AnimalsBeingDerps"], ["AnimalsBeingJerks"],
+	["AnimalsBeingDerps", "AnimalsBeingJerks"],
 	["awww", "popping"],
-
+	["shitposting", "funny"],
+	["blunderyears", "OldSchoolCool"],
+	["CozyPlaces", "LiminalSpace"],
+	["memes", "antimeme"],
+	["FoodPorn", "shittyfoodporn"],
+	["EarthPorn", "shittyearthporn"],
+	
 ];
 
-const RedditWindow = () => {
+const RedditWindow = () => {	
 	const suggestSubreddits = () => {
 		return subpairs[Math.floor(Math.random()*subpairs.length)];
 	}
